@@ -34,17 +34,18 @@ def probability_map(ngrams):
     # counts = dict([(ngram, ngrams_list.count(ngram)) for ngram in set(ngrams_list)])
 
     total = float(sum(counts.values()))
-
     probabilities = dict([(k, (v/total)) for k,v in counts.iteritems()])
-
     return probabilities
+    #counts
 
 
 def train(n, sentences):
     """Perform the whole training process
+    >>> expected = {('a', 'b'): 0.16666666666666666, ('b', 'c'): 0.33333333333333331, ('c', 'd'): 0.16666666666666666, ('d', 'e'): 0.33333333333333331}
     >>> sentences = [['a', 'b', 'c'], ['b', 'c', 'd', 'e'], ['d', 'e']]
-    >>> train(2, sentences)
-    {('a', 'b'): 0.16666666666666666, ('b', 'c'): 0.33333333333333331, ('c', 'd'): 0.16666666666666666, ('d', 'e'): 0.33333333333333331}"""
+    >>> train(2, sentences) ==  expected
+    True
+    """
     ngrams_for_sentences = [ngrams(sent, n) for sent in sentences]
     chained = itertools.chain(*ngrams_for_sentences)
 
@@ -83,7 +84,7 @@ if __name__ == "__main__":
     #import ipdb; ipdb.set_trace()
     sentences = corpus.sents()
     #sentences = [['a', 'b', 'c'], ['b', 'c', 'd', 'e'], ['d', 'e']]
-    p = train(2, sentences)
+    p = train(3, sentences)
 
     import pprint
     pprint.pprint(p)
